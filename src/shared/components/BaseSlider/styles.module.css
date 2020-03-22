@@ -1,0 +1,41 @@
+.container {
+    width: 200px;
+    height: 200px;
+    background-color:red;
+}
+
+.container .backIcon {
+    height: 15px;
+    width: 15px;
+}
+
+.container .backIcon:hover {
+    cursor: pointer;
+}
+
+.container .animation { 
+    background: blue;
+    animation: fadeIn 1s;
+    
+}
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+      margin-left: 0px;
+    }
+    100% {
+      opacity: 1;
+      margin-left: 100px;
+    }
+  }
+
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
