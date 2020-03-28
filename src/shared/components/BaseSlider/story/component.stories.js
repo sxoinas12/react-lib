@@ -10,7 +10,10 @@ storiesOf('Slider', module)
       <BaseSlider.Item
         tabHeader={<div>tab 1</div>}
       >
-         <div>body of child 1</div>
+         <div>child 1</div>
+         <div>child 3</div>
+         <div>child 4</div>
+         <div>child 5</div>
       </BaseSlider.Item>
       <BaseSlider.Item
         tabHeader={<div>tab 2</div>}

@@ -13,45 +13,66 @@ const BaseSlider = ({ containerClassName, children }) => {
         index: -1,
         body: children,
     }
-
-    const [show, setRender] = useState(true);
-    const onAnimationEnd = () => {
-        setRender(false);
-      };
+    const [show, setRender] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState()
+   
+    
+    const onSelect = useCallback((index, internalChildren) => {
+      setRender(true)
+      const some = {
+        index,
+        body: internalChildren,
+      }
+       setCurrentIndex(some)
+       
+    }, [setCurrentIndex])
 
     const [currentTab, setCurrentTab] = useState(initialState)
-
-    const onSelect = useCallback((index, internalChildren) =>{
+    const afterSelect = useCallback((index, internalChildren) =>{
         if (index === -1) {
             setCurrentTab(initialState)
-            setRender(true)
+            
         } else {
-            setCurrentTab({ index, body: internalChildren})
-            setRender(true)
+            setCurrentTab({ index, body: 
+            <React.Fragment>
+              <MainHeader index={index} onClick={onSelect} />
+              {internalChildren}
+            </React.Fragment> })
         }
         })
 
+    const onAnimationEnd = useCallback(() => {
+      setRender(false);
+      return afterSelect(currentIndex.index, currentIndex.body)
+    },[currentIndex]);
+
+    const setAnimation = useMemo(() => {
+      if (currentTab.index === -1) {
+        return styles.prevTab
+      } 
+      return styles.nextTab
+    }, [currentTab])
+
     const getProps = useCallback(() => ({
         onSelect,
+        setAnimation,
     }))
 
-    const render = useMemo((index) => {
+    const render = useMemo(() => {
         return isFunction(currentTab.body) ? currentTab.body(getProps) :
-        React.Children.map(currentTab.body, (item, index) => React.cloneElement(item,{ ...getProps(), index}))
+        React.Children.map(currentTab.body, (item, index) =>{ 
+          return React.cloneElement(item, { ...getProps(), index})
+        })
          
     }, [currentTab])
     
-    const mainHeader = currentTab.index > -1  ? <div className={styles.backIcon} onClick={() => onSelect(-1)}><img src={backIcon} alt="back" /></div> : null
-
-
     return (
         <div className={classnames(styles.container,containerClassName)}>
-            <div>{mainHeader}</div>
-            <div 
-            className={ show ? styles.animation : '' }
+          <div 
+            className={classnames(show ? setAnimation : '',styles.content)}
             onAnimationEnd={onAnimationEnd}>
-                {render}
-            </div>
+          {render}
+          </div>
         </div>
     )
 }
@@ -59,6 +80,13 @@ const BaseSlider = ({ containerClassName, children }) => {
 BaseSlider.Item = SliderItem
 
 
+const MainHeader = ({ onClick, index }) => {
+  return (
+  index > -1 ? (
+    <div className={styles.backIcon} onClick={() => onClick(-1)}><img src={backIcon} alt="back" /></div>
+  ) : (null)
+    )
+  }
 BaseSlider.propTypes = {
     containerClassName: PropTypes.string,
     children: PropTypes.any,

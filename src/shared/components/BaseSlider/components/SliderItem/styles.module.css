@@ -1,9 +1,2 @@
-.container {
-    padding: 5px;
-    border-bottom: 1px solid;
-}
 
-.container:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
+

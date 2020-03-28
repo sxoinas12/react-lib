@@ -1,41 +1,61 @@
 .container {
     width: 200px;
     height: 200px;
-    background-color:red;
+    background-color:lightgray;
+    margin-left: 100px;
+    border: 1px solid;
 }
 
-.container .backIcon {
-    height: 15px;
-    width: 15px;
+.backIcon {
+  height: 15px;
+  width: 15px;
 }
 
-.container .backIcon:hover {
-    cursor: pointer;
+.backIcon:hover {
+  cursor: pointer;
 }
 
-.container .animation { 
-    background: blue;
-    animation: fadeIn 1s;
-    
+
+.container .content {
+  color: white;
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
+
+}
+
+
+
+.container .nextTab { 
+  animation: fadeOut 0.3s;
+}
+
+.container .prevTab {
+animation: fadeIn 0.3s;
 }
 
 @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      margin-left: 0px;
-    }
-    100% {
-      opacity: 1;
-      margin-left: 100px;
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0px);
+    border: 0.5px solid;
   }
+  100% {
+    opacity: 0;
+    transform: translate(-50px);
+  }
+  
+}
 
 
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translate(0px);
+    
   }
+  100% {
+    opacity: 0;
+    transform: translate(50px);
+  }
+}
